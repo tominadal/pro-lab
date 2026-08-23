@@ -7,6 +7,8 @@ import Footer from "@/components/layout/footer"
 import { ThemeProvider } from "@/components/theme-provider"
 import { getSiteSettings } from "@/lib/sanity-queries"
 
+export const revalidate = 60 // revalidate every 60 seconds para todo el layout (main)
+
 // Configuración de fuentes
 const inter = Inter({ 
   subsets: ["latin"], 

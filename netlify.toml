@@ -5,10 +5,7 @@
 [build.environment]
   NODE_VERSION = "18"
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# Redirects removidos porque interfieren con Next.js App Router e ISR
 
 [context.production]
   command = "npm run build"

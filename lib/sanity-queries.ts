@@ -70,7 +70,9 @@ export async function getCourses(): Promise<SanityCourse[]> {
       methodology,
       targetAudience,
       contactInfo
-    }`
+    }`,
+    {},
+    { next: { revalidate: 60 } }
   )
 }
 
@@ -102,7 +104,8 @@ export async function getCourseBySlug(slug: string): Promise<SanityCourse | null
       targetAudience,
       contactInfo
     }`,
-    { slug }
+    { slug },
+    { next: { revalidate: 60 } }
   )
 }
 
@@ -118,7 +121,8 @@ export async function getRelatedCourses(currentSlug: string): Promise<SanityCour
       modality,
       heroImage
     }`,
-    { currentSlug }
+    { currentSlug },
+    { next: { revalidate: 60 } }
   )
 }
 
@@ -131,13 +135,17 @@ export async function getRepresentantes(): Promise<SanityRepresentante[]> {
       location,
       phone,
       image
-    }`
+    }`,
+    {},
+    { next: { revalidate: 60 } }
   )
 }
 
 export async function getSedesCount(): Promise<number> {
   return client.fetch(
-    groq`count(*[_type == "representante"])`
+    groq`count(*[_type == "representante"])`,
+    {},
+    { next: { revalidate: 60 } }
   )
 }
 
@@ -206,6 +214,7 @@ export interface SanitySiteSettings {
     image: any
   }
   coursesHero?: {
+    titleTitlePart1?: string
     titlePart1: string
     titleHighlight: string
     subtitle: string
@@ -243,6 +252,8 @@ export async function getSiteSettings(): Promise<SanitySiteSettings | null> {
         },
         video { ..., "url": asset->url }
       }
-    }`
+    }`,
+    {},
+    { next: { revalidate: 0 } }
   )
 }

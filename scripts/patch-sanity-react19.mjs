@@ -14,6 +14,9 @@ function patchFile(filePath) {
   content = content.replace(/,\s*useEffectEvent\s*\}/g, '}')
   content = content.replace(/\{\s*useEffectEvent\s*,/g, '{')
 
+  // Remove useEffectEvent from use-effect-event package
+  content = content.replace(/import\s*\{\s*useEffectEvent\s*\}\s*from\s*["']use-effect-event["'];?/g, '')
+
   // Inject polyfill if not already injected
   if (!content.includes('const useEffectEvent = ')) {
     const polyfill = `\nimport * as ReactPolyfill from "react";\nconst useEffectEvent = (fn) => { const ref = ReactPolyfill.useRef(fn); ReactPolyfill.useInsertionEffect(() => { ref.current = fn; }, [fn]); return ReactPolyfill.useCallback((...args) => (0, ref.current)(...args), []); };\n`
